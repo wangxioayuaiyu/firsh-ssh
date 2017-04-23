@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        div {
+            padding: 3px;
+            border: 1px solid #cccccc;
+            overflow: hidden;
+        }
+        div.float{
+            float: left;
+        }
+        div.position {
+            position: absolute;
+        }
+        div img{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="float"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_010.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_011.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_000.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_010.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_011.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_001.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_002.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_003.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_004.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_005.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_006.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_007.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_008.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_009.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_010.jpg" alt=""/></div>
+    <div class="float"><img src="images/P_011.jpg" alt=""/></div>
+</body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script>
+    $(function(){
+        (function(){
+            var $width = $('body').width();
+            var $imgW = $('div').outerWidth();
+            var $column = parseInt($width / $imgW);
+            function waterFull(){
+                var arr = [];
+                for(var i=0;i<$('div').length;i++) {
+                    if(i<$column) {
+                        arr.push($('div').eq(i).outerHeight());
+                    }else {
+                        var min = Math.min.apply(null,arr);
+                        var minIndex = arr.indexOf(min);;
+                        $('div').eq(i)
+                                .removeClass('float')
+                                .addClass('position')
+                                .offset({top:min,left:$imgW*minIndex});
+                        arr[minIndex] += $('div').eq(i).outerHeight();
+                    }
+                }
+            }
+            waterFull();
+            function bottom(){
+                if($(window).scrollTop()+$(window).height() > $('body div').eq($('div').length-1).offset().top){
+                    return true;
+                }
+            }
+            $(window).on('scroll',function(){
+                if(bottom()) {
+                    var arr = [
+                        {"src":"images/P_000.jpg"},
+                        {"src":"images/P_001.jpg"},
+                        {"src":"images/P_002.jpg"},
+                        {"src":"images/P_003.jpg"},
+                        {"src":"images/P_004.jpg"},
+                        {"src":"images/P_005.jpg"},
+                        {"src":"images/P_006.jpg"},
+                        {"src":"images/P_007.jpg"},
+                        {"src":"images/P_008.jpg"},
+                        {"src":"images/P_009.jpg"}
+                    ];
+                    for(var i=0;i<arr.length;i++){
+                        $('body').append('<div class="float"><img src="'+arr[i]['src']+'" alt=""/></div>')
+                    }
+                    waterFull();
+                }
+            });
+        })();
+    });
+
+
+    //取得最小值和它的索引；
+    /*
+     function getMin(arr){
+     var minV = arr[0],
+     minI = 0;
+     for(var i=0;i<arr.length;i++) {
+     if(minV>arr[i]){
+     minV = arr[i];
+     minI = i;
+     }
+     }
+     return {min:minV,minI:minI};
+     }*/
+</script>
+</html>
